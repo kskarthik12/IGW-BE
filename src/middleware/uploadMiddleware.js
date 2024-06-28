@@ -1,29 +1,29 @@
-import express from 'express';
-import multer from 'multer';
-import path from 'path';
-import fs from 'fs'
-import { fileURLToPath } from 'url';
-
-const app = express();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// import express from 'express';
+// import bodyParser from 'body-parser'
+// const app = express();
+// app.use(express.json({ limit: '50mb' })); 
+// app.use(bodyParser.json({ limit: '50mb' }));
+// app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 
-const saveBase64Image = (base64, destPath) => {
-    const buffer = Buffer.from(base64, 'base64');
-    fs.writeFileSync(destPath, buffer);
-};
+// app.use(express.json({ limit: '50mb' })); 
 
-// Multer storage configuration
-const uploadMiddleware = async (req, res, next) => {
-    const { serial_number, image } = req.body;
-    if (image && serial_number) {
-        const destPath = path.join('/home/karthik/Image Gallery Website/IGW-FE/src/assets/images', `${serial_number}.jpg`);
-        saveBase64Image(image, destPath);
-        req.file = { path: destPath }; 
-    }
-    next();
-};
 
-export default uploadMiddleware;
+
+// // Middleware to handle base64 image upload
+// const uploadMiddleware = (req, res, next) => {
+//     try {
+//         const { image } = req.body;
+//         if (!image) {
+//             return res.status(400).send('No image provided');
+//         }
+
+//         req.imageBufferString = image;
+//         next();
+//     } catch (error) {
+//         res.status(500).send('Error decoding image');
+//     }
+// };
+
+// export default uploadMiddleware;
+

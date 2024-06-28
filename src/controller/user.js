@@ -103,16 +103,18 @@ const searchImage = async (req, res) => {
 
            
             for (const user of rows) {
-                const imagePath = path.join('src/assets/images', `${user.serial_number}.jpg`);
-            
+                const imagePath = path.join('/images', `${user.serial_number}.jpg`);
+                
                 const createdAt = new Date(user.createdAt).toISOString().split('T')[0];
-                // Add result to the results array
+                
+            
                 results.push({
                     ...user,
                     imagePath: imagePath,
-                    createdAt:createdAt
+                    createdAt: createdAt
                 });
             }
+            
 
             
             res.status(200).send({
@@ -135,24 +137,17 @@ const searchImage = async (req, res) => {
 const imageUpload = async (req, res) => {
 
         try {
-           
-    
-
-            if (!req.file) {
-                return res.status(400).send({
-                    message: "No file uploaded"
-                });
-            }
-            console.log('Image uploaded and metadata saved successfully')
-            // File uploaded successfully, now save metadata to the database
             const { serial_number, design_code, text, label } = req.body;
+               
+            const imagebuffer = req.body.image;
             
-
+            
             
             await pool.query(
-                'INSERT INTO image.animal_class_updated (serial_number, design_code, text, label) VALUES (?, ?, ?, ?)',
-                [serial_number, design_code, text, label ]
+                'INSERT INTO image.animal_class_updated (serial_number, design_code, text, label,imagebuffer) VALUES (?, ?, ?, ?,?)',
+                [serial_number, design_code, text, label, imagebuffer]
             );
+            console.log('Image uploaded and metadata saved successfully')
 
             res.status(201).send({
                 
