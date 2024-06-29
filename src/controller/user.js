@@ -142,7 +142,6 @@ const imageUpload = async (req, res) => {
             const imagebuffer = req.body.image;
             
             
-            
             await pool.query(
                 'INSERT INTO image.animal_class_updated (serial_number, design_code, text, label,imagebuffer) VALUES (?, ?, ?, ?,?)',
                 [serial_number, design_code, text, label, imagebuffer]
